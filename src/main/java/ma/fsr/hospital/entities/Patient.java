@@ -1,5 +1,6 @@
 package ma.fsr.hospital.entities;
 
+import java.util.Collection;
 import java.util.Date;
 
 public class Patient {
@@ -7,4 +8,5 @@ public class Patient {
   private String nom;
   private Date dateNaissance;
   private boolean malade;
+  private Collection<RendezVous> rendezVous;
 }
