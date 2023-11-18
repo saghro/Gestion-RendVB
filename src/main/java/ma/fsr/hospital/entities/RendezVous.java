@@ -14,6 +14,7 @@ public class RendezVous {
   private Date date;
   @ManyToOne
   private Patient patient;
+  @Enumerated(EnumType.STRING)
   private StatusRDV status;
   @ManyToOne
   private Medecin medecin;
