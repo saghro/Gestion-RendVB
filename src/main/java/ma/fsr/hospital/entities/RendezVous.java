@@ -12,11 +12,10 @@ public class RendezVous {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private Date date;
-  private boolean annule;
-  @ManyToMany
+  @ManyToOne
   private Patient patient;
   private StatusRDV status;
-  @ManyToMany
+  @ManyToOne
   private Medecin medecin;
   @OneToOne(mappedBy = "rendezVous")
   private Consultation consultation;
