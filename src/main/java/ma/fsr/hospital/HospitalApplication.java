@@ -1,9 +1,7 @@
 package ma.fsr.hospital;
 
-import ma.fsr.hospital.entities.Medecin;
-import ma.fsr.hospital.entities.Patient;
-import ma.fsr.hospital.entities.RendezVous;
-import ma.fsr.hospital.entities.StatusRDV;
+import ma.fsr.hospital.entities.*;
+import ma.fsr.hospital.repositories.ConsultationRepository;
 import ma.fsr.hospital.repositories.MedcinRepository;
 import ma.fsr.hospital.repositories.PatientRepository;
 import ma.fsr.hospital.repositories.RendezVousRepository;
@@ -27,7 +25,8 @@ public class HospitalApplication {
    CommandLineRunner start(
      PatientRepository patientRepository,
      MedcinRepository medcinRepository,
-     RendezVousRepository rendezVousRepository){
+     RendezVousRepository rendezVousRepository,
+   ConsultationRepository consultationRepository){
 
     return args -> {
       Stream.of("moha","sezef","selia").forEach(name->{
@@ -59,6 +58,12 @@ public class HospitalApplication {
       rendezVous.setPatient(patient);
       rendezVousRepository.save(rendezVous);
 
+      RendezVous rendezVous1 =rendezVousRepository.findById(1L).orElse(null);
+      Consultation consultation=new Consultation();
+      consultation.setDateConsultation(new Date());
+      consultation.setRendezVous(rendezVous1);
+      consultation.setRapport("Rapport de consultation .....");
+      consultationRepository.save(consultation);
     };
 
    }
