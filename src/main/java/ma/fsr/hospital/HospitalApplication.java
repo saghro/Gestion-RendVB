@@ -5,6 +5,7 @@ import ma.fsr.hospital.repositories.ConsultationRepository;
 import ma.fsr.hospital.repositories.MedcinRepository;
 import ma.fsr.hospital.repositories.PatientRepository;
 import ma.fsr.hospital.repositories.RendezVousRepository;
+import ma.fsr.hospital.service.IHospitalService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,11 +23,12 @@ public class HospitalApplication {
     SpringApplication.run(HospitalApplication.class, args);
   }
    @Bean
-   CommandLineRunner start(
-     PatientRepository patientRepository,
-     MedcinRepository medcinRepository,
-     RendezVousRepository rendezVousRepository,
-   ConsultationRepository consultationRepository){
+   CommandLineRunner start(IHospitalService hospitalService,
+                           PatientRepository patientRepository,
+                           RendezVousRepository rendezVousRepository,
+                           MedcinRepository medcinRepository
+
+   ){
 
     return args -> {
       Stream.of("moha","sezef","selia").forEach(name->{
@@ -34,7 +36,7 @@ public class HospitalApplication {
         patient.setNom(name);
         patient.setDateNaissance(new Date());
         patient.setMalade(false);
-        patientRepository.save(patient);
+        hospitalService.savePatient(patient);
 
 
       });
@@ -44,7 +46,7 @@ public class HospitalApplication {
         medecin.setNom(name);
         medecin.setEmail(name +"medecin@gmail.com");
         medecin.setSpecialite(Math.random()>0.5?"Cardio":"Dentiste");
-        medcinRepository.save(medecin);
+        hospitalService.saveMedecin(medecin);
 
 
       });
@@ -63,7 +65,7 @@ public class HospitalApplication {
       consultation.setDateConsultation(new Date());
       consultation.setRendezVous(rendezVous1);
       consultation.setRapport("Rapport de consultation .....");
-      consultationRepository.save(consultation);
+      hospitalService.saveConsultation(consultation);
     };
 
    }
